@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <istream>
-using namespace std;
 
 #include "Matrix.h"
 
@@ -213,6 +212,7 @@ Matrix<T>::~Matrix(){
 template <class T>
 void Matrix<T>::writePGM(char* fileName, int Q)
 {
+	using namespace std;
 	int x = getM();
 	int y = getN();
 	char *image;
