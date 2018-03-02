@@ -93,8 +93,10 @@ void shuffleImage()
 			//set the block used as true in boolean array
 			blockFound[bestMatchX][bestMatchY] = true;
 			std::cout << "Best match has been found at x: " << bestMatchX << " y: " << bestMatchY << std::endl;
+			//write updated unshuffled image to PGM
 			logoUnshuffled.writePGM(output, 10);
 			//logowritePGM(output, logoUnshuffled, 10);
+			//display image using OpenCV
 			cv::Mat image;
 			image = cv::imread("logo_restored.pgm", CV_LOAD_IMAGE_GRAYSCALE);
 			cv::Mat binaryMat(image.size(), image.type());
@@ -103,12 +105,12 @@ void shuffleImage()
 			cv::waitKey(1);
 		}
 	}
-	//write updated unshuffled image to PGM
+	
 }
 
 void findWally()
 {
-	//file names of text imagas
+	//file names of text images
 	char* wallyPath = "Wally_grey.txt";
 	char* scenePath = "Cluttered_scene.txt";
 	//bounds for the template image
@@ -194,7 +196,7 @@ void findWally()
 			double NC = crossCorr / (sqrt(sumWally) * sqrt(sumScene));
 
 			/* if the correlation is better, set the best co-ordinates
-			no direct match so NC should not be == 1 */
+			no direct match may be possible so NC should not be == 1 */
 			if (NC > bestNC)
 			{
 				bestNC = NC;

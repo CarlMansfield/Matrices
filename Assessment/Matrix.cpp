@@ -94,7 +94,7 @@ Matrix<T> Matrix<T>::getBlock(int row, int column, int endR, int endC){
 template <class T>
 double Matrix<T>::sum()
 {
-	double total = 0.0;
+	T total = 0;
 	for (int i = 0; i < M; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -124,7 +124,7 @@ template <class T>
 Matrix<T> Matrix<T>::operator-(const Matrix<T>& OriginalMatrix)
 {
 	Matrix C = Matrix(M, N);
-	double temp;
+	T temp;
 	for (int i = 0; i < M; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -142,7 +142,7 @@ template <class T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T>& OriginalMatrix)
 {
 	Matrix C = Matrix(M, N);
-	double temp;
+	T temp;
 	for (int i = 0; i < M; i++)
 	{
 		for (int j = 0; j < N; j++)
