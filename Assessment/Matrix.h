@@ -22,8 +22,8 @@ public:
 	~Matrix();
 	Matrix(const Matrix<T>& OriginalMatrix);
 	void writePGM(char* fileName, int Q);
-protected:
 	T* data;
+protected:
 	int M;
 	int N;
 	Matrix(){ M = 0; N = 0; data = 0; }

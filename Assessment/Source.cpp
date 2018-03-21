@@ -9,6 +9,7 @@
 #include <opencv2\opencv.hpp>
 
 double* readTXT(char* fileName, int sizeR, int sizeC);
+void showImages(std::string title, Matrix<double>& shuffled, Matrix<double>& noisy, Matrix<double>& output);
 
 void shuffleImage()
 {
@@ -22,7 +23,6 @@ void shuffleImage()
 	//read in data from text files, stored in double of pointers
 	double* shuffleData = readTXT(pathShuffled, p, o);
 	double* noiseData = readTXT(pathNoise, p, o);
-
 
 	//create an empty binary image to store unshuffled data
 	BinaryImage<double> logoUnshuffled(p, o);
@@ -97,12 +97,13 @@ void shuffleImage()
 			logoUnshuffled.writePGM(output, 10);
 			//logowritePGM(output, logoUnshuffled, 10);
 			//display image using OpenCV
-			cv::Mat image;
-			image = cv::imread("logo_restored.pgm", CV_LOAD_IMAGE_GRAYSCALE);
-			cv::Mat binaryMat(image.size(), image.type());
-			cv::threshold(image, binaryMat, 0, 255, cv::THRESH_BINARY);
-			imshow("test", binaryMat);
-			cv::waitKey(1);
+			//cv::Mat image;
+			//image = cv::imread("logo_restored.pgm", CV_LOAD_IMAGE_GRAYSCALE);
+			//cv::Mat binaryMat(image.size(), image.type());
+			//cv::threshold(image, binaryMat, 0, 255, cv::THRESH_BINARY);
+			//imshow("test", noisyMat);
+			//cv::waitKey(1);
+			showImages("Puzzle Solving", shuffled, noise, logoUnshuffled);
 		}
 	}
 	
@@ -286,4 +287,28 @@ double* readTXT(char* fileName, int sizeR, int sizeC)
 	else std::cout << "unable to open file" << std::endl;
 
 	return data;
+}
+
+void showImages(std::string title, Matrix<double>& shuffled, Matrix<double>& noisy, Matrix<double>& output) {
+	int x = shuffled.getM();
+	int y = shuffled.getN();
+
+	cv::Mat shuffledMat = cv::Mat(x, y, CV_64FC1, shuffled.data).clone();
+	cv::Mat noisyMat = cv::Mat(x, y, CV_64FC1, noisy.data).clone();
+	cv::Mat outputMat = cv::Mat(x, y, CV_64FC1, output.data).clone();
+
+	int width = 3 * x;
+	int height = y;
+
+	cv::Mat allImages = cv::Mat(height, width, shuffledMat.type());
+	cv::Rect subImage = cv::Rect(0, 0, x, y);
+
+	shuffledMat.copyTo(allImages(subImage));
+	subImage.x = x;
+	noisyMat.copyTo(allImages(subImage));
+	subImage.x = x * 2;
+	outputMat.copyTo(allImages(subImage));
+
+	cv::imshow(title, allImages);
+	cv::waitKey(1);
 }
