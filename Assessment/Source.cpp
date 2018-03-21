@@ -1,4 +1,3 @@
-#include "Matrix.h"
 #include "BinaryImage.h"
 
 #include <iostream>
@@ -9,7 +8,8 @@
 #include <opencv2\opencv.hpp>
 
 double* readTXT(char* fileName, int sizeR, int sizeC);
-void showImages(std::string title, Matrix<double>& shuffled, Matrix<double>& noisy, Matrix<double>& output);
+
+template <typename T> void showImages(std::string title, Matrix<T>& shuffled, Matrix<T>& noisy, Matrix<T>& output);
 
 void shuffleImage()
 {
@@ -289,7 +289,8 @@ double* readTXT(char* fileName, int sizeR, int sizeC)
 	return data;
 }
 
-void showImages(std::string title, Matrix<double>& shuffled, Matrix<double>& noisy, Matrix<double>& output) {
+template <typename T>
+void showImages(std::string title, Matrix<T>& shuffled, Matrix<T>& noisy, Matrix<T>& output) {
 	int x = shuffled.getM();
 	int y = shuffled.getN();
 
